@@ -1,0 +1,31 @@
+// :host{
+//   // background-color:magentaF;
+//   display: flex;
+//   flex-direction: column;
+//   flex:1 1 0;
+//   >div{
+//     flex:1 1 0;
+// // background-color: mediumslateblue !important;
+//   }
+// }
+// app-main-frameset{
+//     @media print {
+//         display: none;
+//     }
+// }
+// app-stats-details{
+//     @media screen {
+//         display: none;
+//     }
+// }
+
+:host{
+
+}
+
+
+#stat_wrapper{
+    height:100vh;
+    background-color: magenta;
+
+}

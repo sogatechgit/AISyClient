@@ -1,0 +1,154 @@
+:host {
+    color-adjust: exact;
+    background-color: lime;
+    // border: 1px solid red;
+    width: 100%;
+
+}
+
+$line_color: #c0c0c0;
+
+// #tab_wrapper,
+// #wrapper_no_data {
+//     display: grid;
+
+//     height: 100%;
+//     width: 100%;
+//     background-color: olive;
+
+//     > div {
+//         display: grid;
+//         place-items: center;
+//     }
+// }
+
+#wrapper_print{
+    display: grid;
+    gap: 8px;
+    
+    div.header{
+        display: flex;
+        @media print {
+            display: none;
+        }
+    }
+}
+
+#wrapper {
+    display: grid;
+
+    height: 100%;
+    width: 100%;
+
+    // background-color: orange;
+
+    place-items: center;
+    background-color: white;
+    grid-template-columns: 1fr;
+    position: relative; // needed to make data tab width responsive when width is changed
+    place-items: stretch;
+    div#header {
+        display: grid;
+        grid-column: 1 / -1;
+        grid-row: 1;
+        font-size: 0.85em;
+
+        label {
+        }
+        select {
+            padding: 3px 5px 3px 5px;
+            border-radius: 6px;
+            border-color: $line_color;
+            margin-left: 5px;
+
+            option {
+                font-size: 0.9em;
+                font-weight: normal;
+            }
+        }
+        select:focus {
+            outline: none;
+        }
+    }
+    div#details {
+        display: grid;
+        grid-template: 1fr / 1fr;
+        // border:2px solid cyan;
+        overflow: hidden;
+        position: relative;
+        app-data-tabs {
+            grid-column: 1 / -1;
+            grid-row: 1 / -1;
+            position: absolute; // needed to fit container and become responsive when container height is changed
+            width: 100%;
+            height: 100%;
+            // align-self: stretch;
+            justify-self: stretch;
+        }
+    }
+}
+.tab_details_border{
+    border: 1px solid olive;
+}
+.tab_details {
+    display: grid;
+    width: 100%;
+
+    // border: 1px dashed red;
+    padding: 8px;
+
+    > div {
+        overflow: hidden;
+        display: grid;
+        grid-template: 1fr / 1fr;
+        place-items: center;
+        // border:2px dashed orange;
+        // border: 1px solid #c0c0c0;
+
+        box-sizing: border-box;
+        overflow: hidden;
+
+        justify-items: stretch;
+        align-items: stretch;
+
+        app-bar-chart {
+            // background-color: lime;
+            grid-row: 1 / span 1;
+            grid-column: 1 / span 1;
+        }
+    }
+    > div.header{
+        // padding-left: 4px;
+        // padding-right: 4px;
+        // border: 1px solid olive;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        // background-color: red;
+
+        > div.filter {
+            // background-color: yellow;
+            padding:0px;
+            label {
+                line-height: 0.9em;
+                margin-left: 5px;
+            }
+            select {
+                // display: none;
+                padding: 3px 5px 3px 5px;
+                border-radius: 6px;
+                border-color: $line_color;
+                margin-left: 5px;
+                // margin:0px;
+
+                option {
+                    font-size: 0.9em;
+                    font-weight: normal;
+                }
+            }
+            select:focus {
+                outline: none;
+            }
+        }
+    }
+}

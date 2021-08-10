@@ -1,0 +1,428 @@
+{
+	"headerHeight": "0px",
+	"headerStyle": {
+		"font-family": "Futura-Book",
+		"padding": "5px",
+		"display": "grid",
+		"grid-template": "1fr / 1fr",
+		"justify-items": "end",
+		"align-items": "center",
+		"background-color": "auto"
+	},
+	"chartBackgrounds": [
+		"#dc3545",
+		"#28a745",
+		"#ffc107",
+		"#17a2b8",
+		"#6c757d",
+		"#007bff",
+		"#6479a4",
+		"#ffe495",
+		"purple"
+	],
+	"chartBackgroundsBySeries": [
+		{
+			"series": "Raised",
+			"color": "#dc3545"
+		},
+		{
+			"series": "Closed",
+			"color": "#28a745"
+		},
+		{
+			"series": "On Progress",
+			"color": "#dc3545"
+		},
+		{
+			"series": "Complete",
+			"color": "#28a745"
+		},
+		{
+			"series": "Initialized",
+			"color": "#007bff"
+		},
+		{
+			"series": "Cancelled",
+			"color": "purple"
+		},
+		{
+			"series": "Extended",
+			"color": "#ffc107"
+		}
+	],
+	"filters": [
+		{
+			"name": "year",
+			"label": "Raised Year",
+			"params": {
+				"source": "devmain",
+				"value": "RAISEDYEAR",
+				"display": "RAISEDYEAR",
+				"sort": "-RAISEDYEAR"
+			},
+			"data": []
+		},
+		{
+			"name": "biyear",
+			"label": "Raised Years",
+			"params": {
+				"source": "devmain",
+				"value": "RAISEDYEAR",
+				"minmax": true,
+				"step": 4
+			},
+			"data": []
+		},
+		{
+			"name": "status",
+			"label": "Current Status",
+			"params": {
+				"source": "devmain",
+				"value": "STATUS",
+				"display": "STATUS",
+				"sort": "STATUS"
+			},
+			"data": []
+		},
+		{
+			"name": "asset",
+			"label": "Asset",
+			"params": {
+				"source": "devmain",
+				"value": "ASSET",
+				"display": "ASSET",
+				"sort": "ASSET"
+			},
+			"data": []
+		}
+	],
+	"tabs": [
+		{
+			"name": "perf",
+			"label": "Performance",
+			"nopad": true,
+			"reportTitle": "Deviation Performance",
+			"style": {
+				"grid-template": "auto 1fr auto 1fr / 1fr 1fr",
+				"grid-template-areas": "\"hdr_charts hdr_charts\" \"perf_bar perf_pie\" \"hdr_list hdr_list\" \"dev_list dev_list2\"",
+				"gap": "3px"
+			},
+			"stylePrint": {
+
+				"background-color":"khaki",
+				"grid-template": "auto 300px auto auto / 1fr 1fr",
+				"grid-template-areas": "\"hdr_charts hdr_charts\" \"perf_bar perf_pie\" \"hdr_list hdr_list\" \"dev_list dev_list2\"",
+				"gap": "3px"
+			},
+			"headers": [
+				{
+					"name": "hdr_charts",
+					"items": [
+						{
+							"type": "filter",
+							"name": "year",
+							"defFirst": true
+						}
+					]
+				},
+				{
+					"name": "hdr_list",
+					"items": [
+						{
+							"type": "filter",
+							"name": "asset"
+						},
+						{
+							"type": "filter",
+							"name": "status"
+						}
+					]
+				}
+			],
+			"tables": [
+				{
+					"name": "dev_list",
+					"tableCode": "devmain",
+					"allowFilter": true,
+					"pageSizes": [
+						50,
+						100,
+						200,
+						500
+					],
+					"filters": [
+						{
+							"name": "asset",
+							"field": "ASSET"
+						},
+						{
+							"name": "status",
+							"field": "STATUS"
+						},
+						{
+							"name": "year",
+							"field": "RAISEDYEAR"
+						}
+					]
+				},
+				{
+					"name": "dev_list2",
+					"tableCode": "devmain",
+					"gridColumnsDef": "gridColumnsTest",
+					"allowFilter": true,
+					"pageSizes": [
+						50,
+						100,
+						200,
+						500
+					],
+					"filters": [
+						{
+							"name": "year",
+							"field": "RAISEDYEAR"
+						}
+					]
+				}			],
+			"charts": [
+				{
+					"name": "perf_pie",
+					"title": "Deviation Performance in Percentage",
+					"titleExpression": "Deviation Performance as per ${year} in Percentage",
+					"tableCode": "devmain",
+					"aggregate": "count(DEVID)",
+					"series": "RSCLSTAT",
+					"filters": [
+						{
+							"name": "year",
+							"field": "RAISEDYEAR",
+							"operator": "="
+						}
+					],
+					"seriesFixedTitles": [
+						"Raised",
+						"Closed"
+					],
+					"useSeriesColors": true,
+					"seriesTitles": [],
+					"seriesData": [],
+					"type": "pie",
+					"wrapStyle": {
+						"display": "grid",
+						"grid-template": "1fr / 1fr",
+						"place-items": "center",
+						"background-color": "beige"
+					},
+					"bg": "magenta"
+				},
+				{
+					"name": "perf_bar",
+					"type": "bar",
+					"active": true,
+					"dataType": "MDSV",
+					"wrapStyle": {},
+					"title": "Deviation Performance",
+					"titleExpression": "Deviation Performance as per ${year}",
+					"xAxisTitle": "Performance",
+					"yAxisTitle": "Total",
+					"legendPosition": "right",
+					"dataRefObjectName": "",
+					"tableCode": "devmain",
+					"seriesData": "sum(ISCOMPLETE)@CL|Closed`sum(ISONPROGRESS)@RS|Raised",
+					"seriesGroup": "",
+					"filters": [
+						{
+							"name": "year",
+							"field": "RAISEDYEAR",
+							"operator": "="
+						}
+					]
+				}
+			]
+		},
+		
+		{
+			"name": "topProg",
+			"label": "Top Progress",
+			"nopad": true,
+			"style": {
+				"grid-template-columns": "1fr 1fr",
+				"grid-template-rows": "auto .75fr .75fr auto 1fr",
+				"grid-template-areas": "\"hdr_prog_charts hdr_prog_charts\" \"prog_bar prog_pie1\" \"prog_bar prog_pie2\" \"hdr_prog_list hdr_prog_list\" \"dev_prog_list dev_prog_list\"",
+				"gap": "3px"
+			},
+			"stylePrint": {
+				"border":"3px dashed red",
+				"grid-template-columns": "1fr 1fr",
+				"grid-template-rows": "auto 1fr 1fr auto auto",
+				"grid-template-areas": "\"hdr_prog_charts hdr_prog_charts\" \"prog_bar prog_pie1\" \"prog_bar prog_pie2\" \"hdr_prog_list hdr_prog_list\" \"dev_prog_list dev_prog_list\"",
+				"gap": "3px"
+			},
+			"stylePrintX": {
+				"width": "1200px",
+				"place-items": "center",
+				"grid-template-columns": "1fr",
+				"grid-template-rows": "200px 200px 200px",
+				"grid-template-areas": "\"hdr_prog_charts\" \"prog_pie1\" \"prog_pie2\"",
+				"gap": "8px"
+			},
+			"headers": [
+				{
+					"name": "hdr_prog_charts",
+					"items": [
+						{
+							"type": "filter",
+							"name": "biyear",
+							"noAll": true,
+							"defLast": true
+						}
+					]
+				},
+				{
+					"name": "hdr_prog_list",
+					"items": [
+						{
+							"type": "filter",
+							"name": "asset"
+						},
+						{
+							"type": "filter",
+							"name": "status"
+						}
+					]
+				}
+			],
+			"tables": [
+				{
+					"name": "dev_prog_list",
+					"tableCode": "devmain",
+					"allowFilter": true,
+					"pageSizes": [
+						50,
+						100,
+						200,
+						500
+					],
+					"filters": [
+						{
+							"name": "asset",
+							"field": "ASSET"
+						},
+						{
+							"name": "status",
+							"field": "STATUS"
+						}
+					]
+				}
+			],
+			"charts": [
+				{
+					"name": "prog_bar",
+					"type": "line",
+					"dataType": "MDMV",
+					"title": "Deviation Progress ${biyear}",
+					"dataRefObjectName": "",
+					"tableCode": "devmain",
+					"seriesData": "sum(ISCOMPLETE)@COMP|Complete`sum(ISONPROGRESS)@PROG|On Progress",
+					"seriesGroup": "RAISEDYEAR",
+					"yAxisTitle": "Total",
+					"xAxisTitle": "Raised Year",
+					"legendPosition": "right",
+					"wrapStyle": {},
+					"filters": [
+						{
+							"name": "biyear",
+							"field": "RAISEDYEAR",
+							"operator": "in"
+						}
+					]
+				},
+				{
+					"name": "prog_pie1",
+					"title": "Deviation Progress ${biyear} in Percentage",
+					"tableCode": "devmain",
+					"aggregate": "count(DEVID)",
+					"series": "PRCOSTAT",
+					"seriesFixedTitles": [
+						"On Progress",
+						"Complete"
+					],
+					"seriesTitles": [],
+					"seriesData": [],
+					"type": "pie",
+					"wrapStyle": {},
+					"filters": [
+						{
+							"name": "biyear:0",
+							"field": "RAISEDYEAR"
+						}
+					]
+				},
+				{
+					"name": "prog_pie2",
+					"title": "Deviation Progress ${biyear} in Percentage",
+					"tableCode": "devmain",
+					"aggregate": "count(DEVID)",
+					"series": "PRCOSTAT",
+					"seriesFixedTitles": [
+						"On Progress",
+						"Complete"
+					],
+					"seriesTitles": [],
+					"seriesData": [],
+					"type": "pie",
+					"wrapStyle": {},
+					"filters": [
+						{
+							"name": "biyear:1",
+							"field": "RAISEDYEAR"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "devStatus",
+			"label": "Deviation Status",
+			"tables": [],
+			"charts": [],
+			"style": {
+				"grid-template-columns": "",
+				"grid-template-rows": "",
+				"grid-template-areas": ""
+			}
+		},
+		{
+			"name": "devState",
+			"label": "Deviation State",
+			"tables": [],
+			"charts": [],
+			"style": {
+				"grid-template-columns": "",
+				"grid-template-rows": "",
+				"grid-template-areas": ""
+			}
+		},
+		{
+			"name": "devPending",
+			"label": "Pending Deviation",
+			"tables": [],
+			"charts": [],
+			"style": {
+				"grid-template-columns": "",
+				"grid-template-rows": "",
+				"grid-template-areas": ""
+			}
+		},
+		{
+			"name": "print",
+			"label": "Print All",
+			"tables": [],
+			"charts": [],
+			"style": {
+				"grid-template-columns": "",
+				"grid-template-rows": "",
+				"grid-template-areas": ""
+			}
+		}
+	]
+}
