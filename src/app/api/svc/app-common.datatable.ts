@@ -515,7 +515,7 @@ export class TableBase extends AppCommonMethods {
   //   if (idx == -1) this._pendingRequests.push(url);
   // }
 
-  Save(): void {}
+  Save(): void { }
 
   Get(args?: {
     onSuccess?: Function;
@@ -762,9 +762,15 @@ export class TableBase extends AppCommonMethods {
 
     let recs: any = retObj.recordsList;
     const fieldNames = retObj.fieldNames;
+
     if (recs) {
       // map fieldNames to dataColumns definition
       let dataColumns: Array<ColumnInfo> = this.DataColumns(fieldNames);
+      console.log("@@@@ KEY COLUMN:", this.keyCol.name, dataColumns, fieldNames)
+      const noKeyVals = dataColumns.find(col=>{
+        if(!col) return false;
+        return col.name == this.keyName;
+      }) ? false : true;
 
       // get parent link fieldName index
       const linkParentIdx = fieldNames.indexOf(
@@ -777,6 +783,8 @@ export class TableBase extends AppCommonMethods {
         this.apiCommon.FIELD_CHILD_COUNT_ALIAS
       );
 
+
+      let rowIndex = 1;
       recs.forEach((e) => {
         // create new table row
         const row: any = this.NewRow();
@@ -787,6 +795,7 @@ export class TableBase extends AppCommonMethods {
         // assign column values
         let idx: number;
 
+
         for (idx = 0; idx < dataColumns.length; idx++) {
           let col: ColumnInfo = dataColumns[idx];
 
@@ -796,8 +805,8 @@ export class TableBase extends AppCommonMethods {
             //   //row.KEY_AUTONUMBER = 1;
             //   console.log("@@@@@@@ auto number @@@@@")
             // }else{
-              row[col.name] = e[idx];
-            // }
+            row[col.name] = e[idx];
+          // }
           else {
             // add column value to xtra field property
             // XTRA fields are those requested ones that
@@ -822,6 +831,11 @@ export class TableBase extends AppCommonMethods {
           row._parentTable = this._derivedTable;
         } else {
           this.Add(row);
+        }
+
+        if(noKeyVals){
+          row[this.keyName] = rowIndex;
+          rowIndex++;
         }
 
         ret.push(row); // append new row to return record array
@@ -998,7 +1012,7 @@ export class TableBase extends AppCommonMethods {
   }
 
   // redefined in tables.ts to return a new instance of the derived row instead of the base row object
-  NewRow(): any {}
+  NewRow(): any { }
 
   // redefined in tables.ts to return an array of the derived rows instead of array base rows object
   GetRows(): Array<any> {
@@ -1017,12 +1031,12 @@ export class TableBase extends AppCommonMethods {
         return a[prop] < b[prop]
           ? 1
           : desc
-          ? b[prop] < a[prop]
-            ? -1
-            : 0
-          : b[prop] > a[prop]
-          ? -1
-          : 0;
+            ? b[prop] < a[prop]
+              ? -1
+              : 0
+            : b[prop] > a[prop]
+              ? -1
+              : 0;
       });
   }
 
@@ -1046,7 +1060,7 @@ export class TableBase extends AppCommonMethods {
   InitializeTable(): void {
     this.keyFields = this.KeyColumns('keyPosition');
 
-    if(this.keyFields.length == 0){
+    if (this.keyFields.length == 0) {
       // add autid column an set it as the record id field
       //this.columns.push(new ColumnInfo('AN_ID', 'number', '', '', '', 0, -1, -1, -1, -1, false, false, false, this));
       //this.columns.push(new ColumnInfo('KEY_AUTONUMBER', 'number', '', '', '', 0, -1, -1, -1, -1, false, false, false, this));
@@ -1056,8 +1070,8 @@ export class TableBase extends AppCommonMethods {
 
     }
 
-    if(this.tableCode=='devmain')
-      console.log("InitializeTable this.keyFields: ",this.keyFields);
+    if (this.tableCode == 'devmain')
+      console.log("InitializeTable this.keyFields: ", this.keyFields);
 
     this.keyGroupFields = this.KeyColumns('groupPosition');
     this.keyUniqueFields = this.KeyColumns('uniquePosition');

@@ -1227,8 +1227,15 @@ export class DataGridComponent implements OnInit, AfterViewInit, OnDestroy {
     //   console.log('ct row: ', r, ', col:', c);
     // }
 
-    let value: any = r.XTRA ? r.XTRA[c.fieldName] ? r.XTRA[c.fieldName] : r[c.fieldName] : r[c.fieldName];
+    let value: any = r.XTRA ? (r.XTRA[c.fieldKey] ? r.XTRA[c.fieldKey] : r[c.fieldName]) : r[c.fieldName];
+    // let value: any = r.XTRA ? r.XTRA[c.fieldName] ? r.XTRA[c.fieldName] : r[c.fieldName] : r[c.fieldName];
+
+    //if(r.XTRA && r.XTRA[c.fieldName]) return "DDD"
+    // if(r.XTRA) return  c.fieldKey;
+
     let recordValue: boolean = false;
+
+    //"V" + c.fieldName + ", " +
 
     const lkp = this.sourceLookups ? this.sourceLookups[c.displayField] : null;
 

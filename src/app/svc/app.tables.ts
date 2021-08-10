@@ -1,5 +1,5 @@
 /***********************************************************************
-* Automatically generated on 8/10/2021 2:56:06 PM
+* Automatically generated on 8/10/2021 4:20:37 PM
 ***********************************************************************/
 
 import { AppCommonMethodsService } from '../api/svc/app-common-methods.service';
@@ -105,7 +105,7 @@ export class QryDevMain extends TableBase {
   "gridColumnsTest": [
     "STATUSCODE@CODE|cap=Code;center;wd=80",
     "DSTSTATUS|cap=Status;left;mnw=200",
-    "count(REFNUM)@TOTAL|cap=Total;wd=100"
+    "count(REFNUM)@TOTAL|cap=Total;wd=100;center"
   ],
   "gridColumnsTest-X": [
     "REFNUM|cap=Ref.No.;center;wd=100",

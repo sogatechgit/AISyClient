@@ -13,6 +13,7 @@ import {
   IFieldMap,
 } from './app-params.model';
 import { HIGH_CONTRAST_MODE_ACTIVE_CSS_CLASS } from '@angular/cdk/a11y/high-contrast-mode/high-contrast-mode-detector';
+import { typeSourceSpan } from '@angular/compiler';
 
 export interface IDataColumn {
   // [tableAlias.]<fieldName>[@<fieldAlias>]
@@ -1118,10 +1119,10 @@ export class DataOption {
     const agg = this.withAggregate;
 
     visibleFields.forEach((c) => {
-      // this.fields.forEach((c) => {
-      const fldExpr = this.GetFieldExpression(c);
 
-      console.log("fldExpr: ",fldExpr)
+      if (agg) if (c.fieldName == this.keyColumnName) return;
+
+      const fldExpr = this.GetFieldExpression(c);
 
       // if field expression is not yet in the return list string
       // append fldExpr
