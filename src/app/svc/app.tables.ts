@@ -1,5 +1,5 @@
 /***********************************************************************
-* Automatically generated on 8/10/2021 10:12:34 AM
+* Automatically generated on 8/10/2021 2:56:06 PM
 ***********************************************************************/
 
 import { AppCommonMethodsService } from '../api/svc/app-common-methods.service';
@@ -105,7 +105,7 @@ export class QryDevMain extends TableBase {
   "gridColumnsTest": [
     "STATUSCODE@CODE|cap=Code;center;wd=80",
     "DSTSTATUS|cap=Status;left;mnw=200",
-    "count(DEVID)@TOTAL|cap=Total;wd=100"
+    "count(REFNUM)@TOTAL|cap=Total;wd=100"
   ],
   "gridColumnsTest-X": [
     "REFNUM|cap=Ref.No.;center;wd=100",
@@ -149,7 +149,7 @@ export class QryDevMain extends TableBase {
 	this.columns.push(new ColumnInfo('CLPOS', 'number', '', '', '', -1, -1, -1, -1, -1, false, false, false, this));
 	this.columns.push(new ColumnInfo('CLDATEPOS', 'number', '', '', '', -1, -1, -1, -1, -1, false, false, false, this));
 	this.columns.push(new ColumnInfo('CLOSED', 'Date', '', '', '', -1, -1, -1, -1, -1, false, false, false, this));
-	this.columns.push(new ColumnInfo('RESPINSIBLE', 'string', '', '', '', -1, -1, -1, -1, -1, false, false, false, this));
+	this.columns.push(new ColumnInfo('RESPONSIBLE', 'string', '', '', '', -1, -1, -1, -1, -1, false, false, false, this));
 	this.columns.push(new ColumnInfo('ET1', 'number', '', '', '', -1, -1, -1, -1, -1, false, false, false, this));
 	this.columns.push(new ColumnInfo('ET2', 'number', '', '', '', -1, -1, -1, -1, -1, false, false, false, this));
 	this.columns.push(new ColumnInfo('ET3', 'number', '', '', '', -1, -1, -1, -1, -1, false, false, false, this));
@@ -214,7 +214,7 @@ export class QryDevMainRow extends TableRowBase{
 		public CLPOS?:number, 
 		public CLDATEPOS?:number, 
 		public CLOSED?:Date, 
-		public RESPINSIBLE?:string, 
+		public RESPONSIBLE?:string, 
 		public ET1?:number, 
 		public ET2?:number, 
 		public ET3?:number, 

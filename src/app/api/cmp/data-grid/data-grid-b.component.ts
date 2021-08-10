@@ -190,10 +190,9 @@ export class DataGridBComponent
 
       const testGrid = tbl.clientConfig.gridColumnsStatsSummary;
       console.log("@***CONFIG GRID: ", gridCfg, "\n@***TEST GRID: ", testGrid)
-      
 
       // process individual grid column!!!
-      if (gridCfg) 
+      if (gridCfg)
         gridCfg.forEach((gcol) => {
           this.SetGridColumnDef(gcol)
         });
@@ -1419,7 +1418,19 @@ export class DataGridBComponent
     const noFilter: boolean = optArr.indexOf('nofilt') != -1;
     const useCode: boolean = optArr.indexOf('code') != -1;
 
-    colDef.fieldName = fieldName;
+    //colDef.aggregateFuction
+    const fnSml = fieldName.toLocaleLowerCase();
+    const aggParamDelim = fieldName.indexOf('(');
+    if (aggParamDelim != -1) {
+      const aggParamDelimEnd = fieldName.indexOf(')');
+      colDef.aggregateFuction = fieldName.substr(0, aggParamDelim);
+      colDef.fieldName = fieldName.substr(aggParamDelim + 1, aggParamDelimEnd - aggParamDelim - 1);
+      opt.withAggregate = true;
+
+    } else {
+      colDef.fieldName = fieldName;
+    }
+
     colDef.caption = cap;
     colDef.allowFilter = !noFilter;
 
@@ -1442,6 +1453,7 @@ export class DataGridBComponent
     if (fieldName.startsWith('@')) {
       // field alias is specified instead of table fieldname
       // still under development as of 2021/02/01, ...
+
       colDef.fieldName = undefined;
       colDef.fieldAlias = fieldName.substring(1);
       colDef.fieldKey = colDef.fieldAlias;
@@ -1483,9 +1495,15 @@ export class DataGridBComponent
       // console.log("FROM CONFIG COLDEF:",colDef);
       return;
     } else {
-      col = tbl.columns.find((c) => c.name == fieldName);
+
+
+      //col = tbl.columns.find((c) => c.name == fieldName);
+      col = tbl.columns.find((c) => c.name == colDef.fieldName);
 
       if (!col) {
+
+        console.log("COLUMN NOT AVAIALBLE STILL UNDER DEVELOPEMENT ??????? ", tbl, colDef)
+
         // column is not one of the local table columns. must be from a linked
         // table and data will be available in the row's XTRA property
         // AddColumn without creating field element....
@@ -1497,6 +1515,7 @@ export class DataGridBComponent
         // if table alias is specified, field will be taken from
         // the foreign table and therefore noFieldCreate flag is
         // set to false.
+        // console.log("CALL opt.AddColumn: ", colDef, colDef.tableAlias ? false : true)
         opt.AddColumn(colDef, colDef.tableAlias ? false : true);
 
         // if (fieldName == 'LKP_MEMO_1')
@@ -1592,7 +1611,7 @@ export class DataGridBComponent
       opt.LeftJoin(frmLnk);
     } else if (mtxFields) {
       // matrix type column
-      console.log('coldef:', colDef);
+      // console.log('coldef:', colDef);
       return;
     } else if (isAssetField) {
       // if lookup is taken from the nodes table
@@ -1771,13 +1790,14 @@ export class DataGridBComponent
     const { noMask, message, newKey, onSuccess, onError } = args;
     let reqParam: RequestParams = this.ReqParam;
 
-    console.log("@@@@ ### params: ", reqParam,"\nOptions: ",this.options,"\nFields: ", this.options.FieldList);
+    // console.log("@@@@ ### params: ", reqParam, "\nOptions: ", this.options, "\nFields: ", this.options.FieldList);
+    console.log("@@@@ ### params: ", reqParam, "\nOptions: ", this.options);
 
     if (!noMask) this.ShowMask(message);
 
     const subsb: Subscription = this.dataSet.Get([reqParam], {
       onSuccess: (data) => {
-        console.log('\nDataGrid-B ExtractData:', data, reqParam,"\nOptions: ", this.options);
+        console.log('\nDataGrid-B ExtractData:', data, reqParam, "\nOptions: ", this.options);
         // use integrated lookup to display values on grid
         this.grid.sourceLookups = data.processed.lookups[0];
         // set sourceRows to the first element (Array of row data type) in the processed data

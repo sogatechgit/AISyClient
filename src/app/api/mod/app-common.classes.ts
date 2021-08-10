@@ -20,6 +20,7 @@ export interface IDataColumn {
   fieldName?: string;
   fieldMap?: string;
   fieldAlias?: string;
+  fieldExpression?: string;
   fieldKey?: string;
   tableAlias?: string;
   caption?: string;
@@ -299,6 +300,9 @@ export class DataOption {
   public code: string = '';
   public fromLinks: Array<IFromClauseLink> = [];
 
+  public withAggregate: boolean = false;
+  public keyColumnName: string = '';
+
   private _snapshots: Array<ISnapshot> = [];
   public Snapshot(name: string) {
     return this._snapshots.find((s) => s.name == name);
@@ -320,6 +324,8 @@ export class DataOption {
   public AddFieldWithOptions(args: IDataColumn): DataOption {
     // find existing column where field definition properties will be set on
     // same as in the processed field object
+
+    // console.log("AddFieldWithOptions: ",args)
 
     if (this.columns) {
       const col = this.columns.find((c) => c.fieldName == args.fieldName);
@@ -415,13 +421,13 @@ export class DataOption {
     let fldAlias: string =
       (fieldParam.fieldAlias || fieldParam.displayField) && !noFieldAlias
         ? '@' +
-          fieldParam.fieldAlias +
-          (fieldParam.displayField
-            ? '^' +
-              fieldParam.displayField +
-              (fieldParam.displayFieldSub ? ',' : '') +
-              fieldParam.displayFieldSub
-            : '')
+        fieldParam.fieldAlias +
+        (fieldParam.displayField
+          ? '^' +
+          fieldParam.displayField +
+          (fieldParam.displayFieldSub ? ',' : '') +
+          fieldParam.displayFieldSub
+          : '')
         : '';
 
     const aggExpr = fieldParam.aggregateFunction;
@@ -647,9 +653,8 @@ export class DataOption {
     const subExpr: string = this._SubFilterOn ? this.whereClauseSub() : '';
 
     // return composite expression
-    return `${
-      baseExpr.length ? `(${baseExpr})${subExpr.length ? '^' : ''}` : ''
-    }${subExpr.length ? `(${subExpr})` : ''}`;
+    return `${baseExpr.length ? `(${baseExpr})${subExpr.length ? '^' : ''}` : ''
+      }${subExpr.length ? `(${subExpr})` : ''}`;
   }
 
   private _fieldMaps: Array<IFieldMap> = [];
@@ -677,14 +682,12 @@ export class DataOption {
     let ret: string = '';
 
     this._orderByBase.forEach((o) => {
-      ret += `${ret.length ? ',' : ''}${
-        o.sortDescending ? '-' : ''
-      }${this.GetFieldExpression(o, true)}`;
+      ret += `${ret.length ? ',' : ''}${o.sortDescending ? '-' : ''
+        }${this.GetFieldExpression(o, true)}`;
     });
     this._orderBy.forEach((o) => {
-      ret += `${ret.length ? ',' : ''}${
-        o.sortDescending ? '-' : ''
-      }${this.GetFieldExpression(o, true)}`;
+      ret += `${ret.length ? ',' : ''}${o.sortDescending ? '-' : ''
+        }${this.GetFieldExpression(o, true)}`;
     });
     return ret;
   }
@@ -1112,15 +1115,17 @@ export class DataOption {
     );
 
     let ret: string = '';
+    const agg = this.withAggregate;
 
     visibleFields.forEach((c) => {
       // this.fields.forEach((c) => {
       const fldExpr = this.GetFieldExpression(c);
+
+      console.log("fldExpr: ",fldExpr)
+
       // if field expression is not yet in the return list string
       // append fldExpr
-      //if(c.requiredField)
-      if (('`' + ret + '`').indexOf('`' + fldExpr + '`') == -1)
-        ret += (ret.length == 0 ? '' : '`') + fldExpr;
+      if (('`' + ret + '`').indexOf('`' + fldExpr + '`') == -1) ret += (ret.length == 0 ? '' : '`') + fldExpr;
 
       if (c.requiredFields) {
         c.requiredFields.forEach((fn) => {
@@ -1136,6 +1141,8 @@ export class DataOption {
         });
       }
     });
+
+    console.log("FIELD LIST: ", ret, agg)
 
     return ret;
   }

@@ -527,7 +527,9 @@ export class StatsDetailsComponent implements OnInit, AfterViewInit {
 
   UpdateTables(tabName) {
     if (this.dataGrids) {
-      this.dataGrids.forEach(grd => console.log("UpdateTables, DataGrid:", grd.name))
+      this.dataGrids.forEach(grd => {
+        // console.log("UpdateTables, DataGrid:", grd.name)
+      })
     } else {
       console.log("No data grids defined");
     }
