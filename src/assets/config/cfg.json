@@ -1,8 +1,8 @@
 {
   "DataSources": [
     {
-      "name": "sepco",
-      "app_title": "SEPCo - IMSA",
+      "name": "aisy",
+      "app_title": "MPTL - AISy",
       "app_header_main": "Integrity Management System Application - IMSA",
       "app_header_sub": "Shell Exploration and Production Company - SEPCo",
       "tree_definition": [
