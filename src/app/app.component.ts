@@ -14,6 +14,12 @@ export class AppComponent {
   public showMaterials: boolean = true;
   public showFontAwesome: boolean = false;
 
+  public mainSettings: any = {
+    isHome:true,
+    homePage: "",
+    statsConfig: ""
+  }
+
 
   constructor(public dataSource: AppMainServiceService) {
     // this.dataSource.dialog = this.dialog;
@@ -25,14 +31,14 @@ export class AppComponent {
 
   }
 
-  @ViewChild(StatsDetailsComponent) stats:StatsDetailsComponent;
+  @ViewChild(StatsDetailsComponent) stats: StatsDetailsComponent;
 
   @HostListener('window:resize')
-  onResize(event){
+  onResize(event) {
 
   }
 
-  public printMode:boolean = false;
+  public printMode: boolean = false;
   @HostListener('window:beforeprint')
   onbeforeprint() {
     this.printMode = true;
@@ -48,10 +54,10 @@ export class AppComponent {
 
 
 
-  get statWidth():string{
+  get statWidth(): string {
     // return  '1200px'
     // return '100%';
-    return this.printMode ? '1200px' :  '100%';
+    return this.printMode ? '1200px' : '100%';
   }
 
   get ds(): AppDataset {
