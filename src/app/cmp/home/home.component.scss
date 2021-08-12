@@ -1,0 +1,40 @@
+@import "./../../../appcssvars.scss";
+
+:host {
+    display: grid;
+    height: 100%;
+    grid-template: auto auto 1fr auto / 1fr;
+
+    margin: 0px;
+    padding: 0px;
+    border: none;
+
+    > div#banner {
+        background-color: $alt_background;
+        color: $alt_foreground;
+        height: 65px;
+
+        display: grid;
+        align-items: center;
+
+        padding-left:10px;
+    }
+
+    > div#menubar {
+        background-color: $alt_background_menu;
+        color: $alt_foreground_menu;
+        height: 45px;
+
+        display: flex;
+        align-items: center;
+        padding-left:10px;
+    }
+
+    > div#details {
+        overflow: auto;
+    }
+    > div#footer {
+        background-color: $alt_background;
+        color: $alt_foreground;
+    }
+}

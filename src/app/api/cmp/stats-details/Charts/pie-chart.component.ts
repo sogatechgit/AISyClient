@@ -25,6 +25,8 @@ export class PieChartComponent implements OnInit, AfterViewInit {
   @Input() titleSize: number = 16;
   @Input() legendSize: number = 14;
 
+  @Input() dataFormat:string = '%'
+
 
   @Input() legendPosition: PositionType = 'right';
 
@@ -88,7 +90,13 @@ export class PieChartComponent implements OnInit, AfterViewInit {
       this._data.backgroundColor = value.backgroundColor;
     }
 
-    if (this.chart) this.update();
+    if (this.chart) {
+      this.chart.chart.config['args'] = {
+        format:this.dataFormat
+      }
+      // console.log("this.chart: " ,this.chart.chart.config)
+      this.update();
+    }
   }
 
   @Input() set seriesTitles(value: Label[]) {
@@ -147,6 +155,29 @@ export class PieChartComponent implements OnInit, AfterViewInit {
         },
         textShadowBlur:15,
         textShadowColor:'black',
+        formatter:function(value,context) {
+          // return context.chart.data.labels[context.dataIndex] + '%'
+
+          const args = context.chart.config['args'];
+          const fmt = args ? (args.format ? args.format : "") : ""
+
+          if(fmt.indexOf('%')!=-1){
+            const places = (fmt.length == 1 ? 0 : parseInt(fmt.substr(0,1)));
+            let total = 0;
+            context.chart.data.datasets.forEach(ds=>{
+              let st = 0;
+              ds.data.forEach(v=>{
+                st += v;
+              })
+              total += st;
+            })
+            return (100 * value/total).toFixed(places) + '%'
+  
+          }else{
+            return value;
+          }
+
+        },
         backgroundColor: function (context) {
           const index = context.dataIndex;
           const value = context.dataset.data[index];

@@ -183,6 +183,7 @@
 					"name": "perf_pie",
 					"title": "Deviation Performance in Percentage",
 					"titleExpression": "Deviation Performance as per ${year} in Percentage",
+					"dataFormat":"2%",
 					"tableCode": "devmain",
 					"aggregate": "count(DEVID)",
 					"series": "RSCLSTAT",

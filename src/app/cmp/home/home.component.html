@@ -1,1 +1,12 @@
-<p>home works!</p>
+<div id="banner">
+    <img src="./assets/logo55b.png" alt="">
+
+</div>
+<div id="menubar">
+    <i class="fa fa-ban"></i><span>Home</span>
+</div>
+<div id="details">
+    <div id="home_details" *ngIf="!statConfig">Home Details</div>
+    <app-stats-details name="deviation" [printerFriendly]="false" [configFile]="statConfig"></app-stats-details>
+</div>
+<div id="footer">Footer</div>

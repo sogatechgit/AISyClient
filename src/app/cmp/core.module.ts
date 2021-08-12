@@ -9,6 +9,7 @@ import { SettingsModule } from './settings/settings.module';
 
 import { LocationSelectorComponent } from './location-selector/location-selector.component';
 import { AppLandingComponent } from './app-landing/app-landing.component';
+import { HomeComponent } from './home/home.component';
 
 // associated with v2 implementation // import { ChemDbModule } from './chem-db/chem-db.module';
 
@@ -17,6 +18,7 @@ import { AppLandingComponent } from './app-landing/app-landing.component';
 
 const declare = [
   AppLandingComponent,
+  HomeComponent,
   LocationSelectorComponent,
 ];
 const both = [
@@ -31,7 +33,7 @@ const both = [
 @NgModule({
   declarations: declare,
   imports: [CommonModule, both],
-  exports: [AppLandingComponent, both],
+  exports: [AppLandingComponent,HomeComponent, both],
 })
 export class CoreModule {
   static injector: Injector;

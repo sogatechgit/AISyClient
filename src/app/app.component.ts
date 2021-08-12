@@ -15,9 +15,13 @@ export class AppComponent {
   public showFontAwesome: boolean = false;
 
   public mainSettings: any = {
-    isHome:true,
-    homePage: "",
-    statsConfig: ""
+    homeDetails: {
+      title:"Mubadala Petroleum",
+      titleSub:"",
+      footer:""
+    },
+    statsConfig: "deviation.stats.json",
+    statsConfigX: ""
   }
 
 
