@@ -68,7 +68,11 @@ export class DataGridBComponent
   @Input() reportPageSize: number = 50;
   @Input() flatTable: boolean = false;
 
+  @Input() noScroll: boolean = false;
+  @Input() noRowHilight: boolean = false;
+
   @Input() gridHeaderClassName: string;
+
 
   private _extFilterExpression: string = ""
   @Input() set extFilterExpression(value: string) {
@@ -189,7 +193,6 @@ export class DataGridBComponent
 
 
       const testGrid = tbl.clientConfig.gridColumnsStatsSummary;
-      console.log("@***CONFIG GRID: ", gridCfg, "\n@***TEST GRID: ", testGrid)
 
       // process individual grid column!!!
       if (gridCfg)
@@ -199,7 +202,7 @@ export class DataGridBComponent
 
     } else {
       // grid column definition is done within the component controller
-      console.log('\nDataGrid-B parent: ', this.parent);
+      // console.log('\nDataGrid-B parent: ', this.parent);
     }
 
     // setTimeout(()=>{
@@ -1407,6 +1410,7 @@ export class DataGridBComponent
     const optArr = defArr.length > 1 ? defArr[1].split(';') : [];
 
     const dateFormat = this.dataSet.apiCommon.GetProperty(optArr, 'dfmt');
+    const displayFormat = this.dataSet.apiCommon.GetProperty(optArr, 'format');
     const fieldMap = this.dataSet.apiCommon.GetProperty(optArr, 'map');
     const cap = this.dataSet.apiCommon.GetProperty(optArr, 'cap');
     const width = this.dataSet.apiCommon.GetProperty(optArr, 'wd');
@@ -1445,6 +1449,8 @@ export class DataGridBComponent
       if (maxWidth)
         colDef.maxWidth = Math.max(+maxWidth, minWidth ? +minWidth : +maxWidth);
     }
+
+    if(displayFormat) colDef.displayFormat = displayFormat;
 
     if (optArr.indexOf('center') != -1) colDef.align = 'center';
     if (optArr.indexOf('right') != -1) colDef.align = 'right';
@@ -1662,6 +1668,8 @@ export class DataGridBComponent
     if (leftJoin) {
     }
 
+    console.log("TOTAL COLDEF: ",colDef);
+
     opt.AddColumn(colDef);
 
     //GetPropertyStr
@@ -1790,14 +1798,11 @@ export class DataGridBComponent
     const { noMask, message, newKey, onSuccess, onError } = args;
     let reqParam: RequestParams = this.ReqParam;
 
-    // console.log("@@@@ ### params: ", reqParam, "\nOptions: ", this.options, "\nFields: ", this.options.FieldList);
-    console.log("@@@@ ### params: ", reqParam, "\nOptions: ", this.options);
-
     if (!noMask) this.ShowMask(message);
 
     const subsb: Subscription = this.dataSet.Get([reqParam], {
       onSuccess: (data) => {
-        console.log('\nDataGrid-B ExtractData:', data, reqParam, "\nOptions: ", this.options);
+        // console.log('\nDataGrid-B ExtractData:', data, reqParam, "\nOptions: ", this.options);
         // use integrated lookup to display values on grid
         this.grid.sourceLookups = data.processed.lookups[0];
         // set sourceRows to the first element (Array of row data type) in the processed data

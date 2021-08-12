@@ -766,7 +766,8 @@ export class TableBase extends AppCommonMethods {
     if (recs) {
       // map fieldNames to dataColumns definition
       let dataColumns: Array<ColumnInfo> = this.DataColumns(fieldNames);
-      console.log("@@@@ KEY COLUMN:", this.keyCol.name, dataColumns, fieldNames)
+      
+      // check if key field is not one of the defined columns
       const noKeyVals = dataColumns.find(col=>{
         if(!col) return false;
         return col.name == this.keyName;
@@ -833,6 +834,9 @@ export class TableBase extends AppCommonMethods {
           this.Add(row);
         }
 
+        // if no key values extracted from the server.
+        // this is normally the case if table column value(s)
+        // are aggregate results
         if(noKeyVals){
           row[this.keyName] = rowIndex;
           rowIndex++;

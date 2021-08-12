@@ -88,6 +88,8 @@
                         <app-data-grid-b [name]="tab.name + '_' + tbl.name" #grid [flatTable]="false"
                             style="top:0px;margin-top:-3px;padding:0px;border:none;" [RowHeight]="26"
                             [RowHeaderHeight]="30" [RowHeaderWidth]="0" [noBarMenu]="true" [dataSet]="ds"
+                            [noScroll]="tbl.noScroll"
+                            [noRowHilight]="tbl.noRowHilight"
                             [pageSizes]="tbl.pageSizes"
                             [activeFiltering]="tbl.allowFilter!=undefined ? tbl.allowFilter : false"
                             gridHeaderClassName="alt-a" [tableCode]="tbl.tableCode" 

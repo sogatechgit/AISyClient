@@ -40,6 +40,7 @@ export interface IDataColumn {
 
   displayField?: string;
   displayFieldSub?: string;
+  displayFormat?:string;
 
   inlineLookupCode?: string; // display code field from the linked lookup table
   inlineLookupText?: string; // display text field from the linked lookup table
@@ -251,6 +252,8 @@ export class DataColumn {
 
     this.requiredFields = args.requiredFields;
 
+    this.displayFormat = args.displayFormat;
+
     // override default visibility value only if args.visibility is defined
     if (args.visible != undefined) this.visible = args.visible;
   }
@@ -259,6 +262,8 @@ export class DataColumn {
   public fieldKey: string;
   public fieldName: string;
   public fieldMap: string;
+
+  public displayFormat:string;
 
   public tableAlias: string;
   public fieldAlias: string;
@@ -1142,8 +1147,6 @@ export class DataOption {
         });
       }
     });
-
-    console.log("FIELD LIST: ", ret, agg)
 
     return ret;
   }

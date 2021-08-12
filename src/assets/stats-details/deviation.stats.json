@@ -170,7 +170,9 @@
 					"tableCode": "devmain",
 					"gridColumnsDef": "gridColumnsTest",
 					"allowFilter": false,
+					"noScroll":true,
 					"noFooter":true,
+					"noRowHilight":true,
 					"filters": [
 						{
 							"name": "year",

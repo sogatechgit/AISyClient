@@ -91,6 +91,7 @@ export class DataGridComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() sourceRows: any = null;
   @Input() sourceLookups: any = null;
 
+  
   @Input() gridHeaderClassName: string;
 
   @Input() pageSizes: Array<number> = [200, 500, 1000, 1500, 2000, 3000];
@@ -98,6 +99,9 @@ export class DataGridComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() fontFactor: number = 1;
 
+  @Input() noScroll: boolean = false;
+  @Input() noRowHilight: boolean = false;
+  
   @Input() showMenu: boolean = false;
   @Input() OpenManagement: Function = null;
 
@@ -115,6 +119,18 @@ export class DataGridComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() SelectedIds: Array<number> = [];
   @Input() allowSelect: boolean = false;
+
+  private _headerPadWidth:number = 17;
+  @Input() set headerPadWidth(value: number){
+    this._headerPadWidth=value;
+  }
+  get headerPadWidth(): number {
+    // this can return a calculated field based on the
+    // overflow status of the grid virtual scroll container
+    if(this.noScroll) return 0;
+    return this._headerPadWidth;
+  }
+
 
   private _gridParams: GridParams = null;
   @Input() set gridParams(value: GridParams) {
@@ -825,7 +841,7 @@ export class DataGridComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public RowClass(row: any) {
     return {
-      'current-row': this.isCurrRow(row),
+      'current-row': this.isCurrRow(row) && !this.noRowHilight,
       noselect: true,
     };
   }
@@ -1233,6 +1249,8 @@ export class DataGridComponent implements OnInit, AfterViewInit, OnDestroy {
     //if(r.XTRA && r.XTRA[c.fieldName]) return "DDD"
     // if(r.XTRA) return  c.fieldKey;
 
+    if(c.fieldKey == 'TOTAL') console.log('TOTAL PROPS: ', c, c.displayFormat ,r,value )
+
     let recordValue: boolean = false;
 
     //"V" + c.fieldName + ", " +
@@ -1418,12 +1436,6 @@ export class DataGridComponent implements OnInit, AfterViewInit, OnDestroy {
     return this._portHeight;
   }
 
-  public get headerPadWidth(): number {
-    // this can return a calculated field based on the
-    // overflow status of the grid virtual scroll container
-    return 17;
-  }
-
   public get RowHeaderWidth(): number {
     if (!this._changeValuesNow) return 6;
 
@@ -1550,6 +1562,7 @@ export class DataGridColumn extends DataColumn {
     this.lookupParams = args.lookupParams;
     this.colorParams = args.colorParams;
     this.isKey = args.isKey;
+
     this.displayFormat = args.displayFormat;
 
     this.allowFilter = args.allowFilter != undefined ? args.allowFilter : true;

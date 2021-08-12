@@ -1,9 +1,13 @@
 <div id="banner">
     <img src="./assets/logo55b.png" alt="">
-
+    <span id="appTitle">( {{title}} )</span>
 </div>
 <div id="menubar">
-    <i class="fa fa-ban"></i><span>Home</span>
+    <i class="fa fa-home"></i><span>Home</span>
+    <ng-container *ngIf="!isDeviation"><i class="fa fa-chart-bar right padleft"></i><span  (click)="AppClick($event)">eDeviation</span></ng-container>
+    <ng-container *ngIf="!isAnomaly"><i class="fa fa-chart-bar"
+            [ngClass]="{'right':isDeviation, 'padleft':isDeviation}"></i><span  (click)="AppClick($event)">eAnomaly</span></ng-container>
+    <ng-container *ngIf="!isMoC"><i class="fa fa-chart-bar"></i><span  (click)="AppClick($event)">eMoC</span></ng-container>
 </div>
 <div id="details">
     <div id="home_details" *ngIf="!statConfig">Home Details</div>

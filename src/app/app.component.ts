@@ -16,7 +16,7 @@ export class AppComponent {
 
   public mainSettings: any = {
     homeDetails: {
-      title:"Mubadala Petroleum",
+      title:"eDeviation",
       titleSub:"",
       footer:""
     },

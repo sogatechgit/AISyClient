@@ -25,7 +25,14 @@ export class PieChartComponent implements OnInit, AfterViewInit {
   @Input() titleSize: number = 16;
   @Input() legendSize: number = 14;
 
-  @Input() dataFormat:string = '%'
+  private _dataFormat: string;
+  @Input() set dataFormat(value: string) {
+    this._dataFormat = value;
+  }
+  get dataFormat(): string {
+    return this._dataFormat ? this._dataFormat : '%';
+  }
+
 
 
   @Input() legendPosition: PositionType = 'right';
@@ -92,7 +99,7 @@ export class PieChartComponent implements OnInit, AfterViewInit {
 
     if (this.chart) {
       this.chart.chart.config['args'] = {
-        format:this.dataFormat
+        format: this.dataFormat
       }
       // console.log("this.chart: " ,this.chart.chart.config)
       this.update();
@@ -148,32 +155,35 @@ export class PieChartComponent implements OnInit, AfterViewInit {
         anchor: 'center',
         align: 'center',
         color: 'white',
-        padding:function(context){
+        padding: function (context) {
           const index = context.dataIndex;
           const value = context.dataset.data[index];
           return value ? 1 : 3;
         },
-        textShadowBlur:15,
-        textShadowColor:'black',
-        formatter:function(value,context) {
+        textShadowBlur: 15,
+        textShadowColor: 'black',
+        formatter: function (value, context) {
           // return context.chart.data.labels[context.dataIndex] + '%'
 
           const args = context.chart.config['args'];
           const fmt = args ? (args.format ? args.format : "") : ""
 
-          if(fmt.indexOf('%')!=-1){
-            const places = (fmt.length == 1 ? 0 : parseInt(fmt.substr(0,1)));
+          if (fmt.toLowerCase() == 'general') {
+            return value;
+          }
+          else if (fmt.indexOf('%') != -1) {
+            const places = (fmt.length == 1 ? 0 : parseInt(fmt.substr(0, 1)));
             let total = 0;
-            context.chart.data.datasets.forEach(ds=>{
+            context.chart.data.datasets.forEach(ds => {
               let st = 0;
-              ds.data.forEach(v=>{
+              ds.data.forEach(v => {
                 st += v;
               })
               total += st;
             })
-            return (100 * value/total).toFixed(places) + '%'
-  
-          }else{
+            return (100 * value / total).toFixed(places) + '%'
+
+          } else {
             return value;
           }
 
@@ -214,9 +224,9 @@ export class PieChartComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    setTimeout(()=>{
+    setTimeout(() => {
       this.handleResize(null);
-    },10)
+    }, 10)
   }
 
   get chartObject(): Chart {

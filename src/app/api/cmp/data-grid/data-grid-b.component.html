@@ -129,6 +129,8 @@
         <!-- <input type="hidden" [value]="TreeLocationFinal"> -->
 
         <app-data-grid #grid [options]="options" 
+          [noScroll] = "noScroll"
+          [noRowHilight] = "noRowHilight"
           [gridHeaderClassName]="gridHeaderClassName"
           [noBarMenu]="noBarMenu" [pageNumber]="reqInfo.pageNumber"
           [pageSize]="reqInfo.pageSize" [totalPages]="reqInfo.totalPages" [totalRecords]="reqInfo.totalRecords"

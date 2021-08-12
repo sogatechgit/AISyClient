@@ -47,7 +47,14 @@ export class StatsDetailsComponent implements OnInit, AfterViewInit {
     return this._name ? this._name : "status_details"
   }
 
-  @Input() configFile: string;
+  private _configFile:string;
+  @Input() set configFile(value: string){
+    this._configFile = value;
+    console.log("CONFIG FILE CHANGED TO ",value);
+  }
+  get configFile():string{
+    return this._configFile;
+  }
 
   @Input() printerFriendly: boolean = false;
 
