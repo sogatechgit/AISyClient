@@ -21,6 +21,7 @@ import { AppReturn } from '../mod/app-return.model';
 import { AppCommonMethods } from './app-common.methods';
 import { AppCommonMethodsService } from './app-common-methods.service';
 import { ILookupTableParams } from '../mod/app-common.classes';
+import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 
 export class TableBase extends AppCommonMethods {
   constructor(
@@ -800,13 +801,17 @@ export class TableBase extends AppCommonMethods {
         for (idx = 0; idx < dataColumns.length; idx++) {
           let col: ColumnInfo = dataColumns[idx];
 
+          if(col)if(col.name == 'TOTAL')console.log("Hello!!!")
+
+          const dataFieldName = col ? col.name : fieldNames[idx];
+
           if (col)
             // add column value to the new row when it is part of the columns definition of the table
             // if(col.name == 'KEY_AUTONUMBER'){
             //   //row.KEY_AUTONUMBER = 1;
             //   console.log("@@@@@@@ auto number @@@@@")
             // }else{
-            row[col.name] = e[idx];
+            row[dataFieldName] = e[idx];
           // }
           else {
             // add column value to xtra field property
@@ -819,10 +824,14 @@ export class TableBase extends AppCommonMethods {
             // a record in a lookup table.
 
             // extra field name
-            const xtraFieldName = fieldNames[idx];
+            // const xtraFieldName = fieldNames[idx];
+
             let valObj: any = {};
-            valObj[xtraFieldName] = e[idx];
-            row.XTRA = valObj;
+            valObj[dataFieldName] = e[idx];
+
+            // when XTRA is assigned an object value, set function itrerates
+            // through the properties and assigned the values one by one.
+            row.XTRA = valObj;  
           }
         }
 

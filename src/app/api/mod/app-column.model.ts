@@ -96,7 +96,9 @@ export class ColumnInfo extends FieldInfo {
     public isRequired: boolean = false,
     public isLong: boolean = false,
 
-    public table: any = null
+    public table: any = null,
+    public total:number = 0
+
   ) {
     super(name, type, caption, alias, roles, isParameter);
 

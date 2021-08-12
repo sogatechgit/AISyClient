@@ -1244,14 +1244,14 @@ export class DataGridComponent implements OnInit, AfterViewInit, OnDestroy {
     // }
 
     let value: any = r.XTRA ? (r.XTRA[c.fieldKey] ? r.XTRA[c.fieldKey] : r[c.fieldName]) : r[c.fieldName];
-    // let value: any = r.XTRA ? r.XTRA[c.fieldName] ? r.XTRA[c.fieldName] : r[c.fieldName] : r[c.fieldName];
 
-    //if(r.XTRA && r.XTRA[c.fieldName]) return "DDD"
-    // if(r.XTRA) return  c.fieldKey;
+    if(c.fieldKey == 'TOTAL'){
+      // console.log('Total Information', c,r)
+    }
 
-    if(c.fieldKey == 'TOTAL') console.log('TOTAL PROPS: ', c, c.displayFormat ,r,value )
 
     let recordValue: boolean = false;
+    
 
     //"V" + c.fieldName + ", " +
 
@@ -1313,7 +1313,19 @@ export class DataGridComponent implements OnInit, AfterViewInit, OnDestroy {
     // cache only cell text non-native value
     if (recordValue) r.CELL_TEXT[c.fieldKey] = value;
 
-    return value;
+    const fmt = c.displayFormat ? c.displayFormat : ""
+
+    if(fmt.indexOf('%')!=-1){
+      const fmtArr = fmt.split('`');
+      const percFmt = fmtArr.find(fm=>fm.indexOf('%')!=-1).replace('(','').replace(')','');
+      const genFmt = fmtArr.find(fm=>fm.toLocaleLowerCase()=='general');
+      const place = percFmt.length<=1 ? 0 : parseInt(percFmt.substr(0,1));
+      return (genFmt ?`(${value}) `  : '')+ (100 * value/c.total).toFixed(place) + ' %';
+    }else{
+      return value;
+    }
+
+
   }
 
   cellTextFromLookupParams(r: any, c: DataGridColumn, value: any): string {

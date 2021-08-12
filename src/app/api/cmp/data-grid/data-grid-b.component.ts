@@ -1450,7 +1450,7 @@ export class DataGridBComponent
         colDef.maxWidth = Math.max(+maxWidth, minWidth ? +minWidth : +maxWidth);
     }
 
-    if(displayFormat) colDef.displayFormat = displayFormat;
+    if (displayFormat) colDef.displayFormat = displayFormat;
 
     if (optArr.indexOf('center') != -1) colDef.align = 'center';
     if (optArr.indexOf('right') != -1) colDef.align = 'right';
@@ -1668,8 +1668,6 @@ export class DataGridBComponent
     if (leftJoin) {
     }
 
-    console.log("TOTAL COLDEF: ",colDef);
-
     opt.AddColumn(colDef);
 
     //GetPropertyStr
@@ -1802,11 +1800,33 @@ export class DataGridBComponent
 
     const subsb: Subscription = this.dataSet.Get([reqParam], {
       onSuccess: (data) => {
-        // console.log('\nDataGrid-B ExtractData:', data, reqParam, "\nOptions: ", this.options);
+        console.log('\nDataGrid-B ExtractData:', data, reqParam, "\nOptions: ", this.options);
         // use integrated lookup to display values on grid
         this.grid.sourceLookups = data.processed.lookups[0];
         // set sourceRows to the first element (Array of row data type) in the processed data
         this.sourceRows = data.processed.data[0];
+
+        // reset column totals
+        this.options.columns.forEach(dcol => {
+          dcol.total = 0;
+          if (dcol.displayFormat) {
+            if (dcol.displayFormat.indexOf('%') != -1) {
+
+
+              this.sourceRows.forEach(row => {
+                // console.log("TOTAL ROW: ",row,dcol)
+
+                if (row.XTRA[dcol.fieldKey])
+                  dcol.total += (row.XTRA[dcol.fieldKey]);
+                else if (row[dcol.fieldName])
+                  dcol.total += (row[dcol.fieldName]);
+
+              })
+
+              console.log("Data Column: ", dcol)
+            }
+          }
+        })
 
         // refresh grid
         this.Refresh((args) => {

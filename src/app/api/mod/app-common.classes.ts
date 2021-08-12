@@ -274,6 +274,8 @@ export class DataColumn {
   public isKey: boolean;
   public visible: boolean = true;
 
+  public total: number = 0;
+
   public allowFilter: boolean;
   public sortAsc: boolean;
   public sortDesc: boolean;
