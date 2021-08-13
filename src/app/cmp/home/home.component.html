@@ -11,6 +11,8 @@
 </div>
 <div id="details">
     <div id="home_details" *ngIf="!statConfig">Home Details</div>
-    <app-stats-details name="deviation" [printerFriendly]="false" [configFile]="statConfig"></app-stats-details>
+    <app-stats-details *ngIf="isAnomaly" name="deviation" [printerFriendly]="false" configFile="anomaly.stats.json"></app-stats-details>
+    <app-stats-details *ngIf="isDeviation" name="deviation" [printerFriendly]="false" configFile="deviation.stats.json"></app-stats-details>
+    <app-stats-details *ngIf="isMoC" name="deviation" [printerFriendly]="false" configFile="moc.stats.json"></app-stats-details>
 </div>
-<div id="footer">Footer</div>
+<div id="footer" align="center"><span>Mubadala Petroleum - {{title}}</span></div>

@@ -55,7 +55,15 @@
         overflow: auto;
     }
     > div#footer {
+        display: flex;
+        align-items: center;
         background-color: $alt_background;
         color: $alt_foreground;
+
+        height:25px;
+        span{
+            font-size: 0.85em;
+            margin:auto;
+        }
     }
 }

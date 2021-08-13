@@ -1,3 +1,29 @@
+// ********************************** bootstrap colors ******************************
+$bs_danger: #dc3545;
+$bs_warning: #ffc107;
+$bs_success: #28a745;
+$bs_info: #17a2b8;
+$bs_secondary: #6c757d;
+$bs_primary: #007bff;
+$bs_default: #6479a4;
+
+$bs_warning_light: #ffe495;
+// $bs_warning_light: $bs_secondary;
+$bs_purple: purple;
+
+// alternate theme colors
+$alt_font-family:'Trebuchet MS';
+$alt_background:#525252;
+$alt_foreground:white;
+
+$alt_foreground_menu:white;
+$alt_background_menu:#f16e0a;
+
+$alt_bs_warning_light:$bs_secondary;
+// $alt_bs_warning: #303030;
+$alt_bs_warning:$alt_background_menu;
+
+
 // Size Variables
 $header_height: 60px;
 $footer_height: 24px;
@@ -27,17 +53,6 @@ $form_button_font-family:'Futura-Book';
 $form_subgrid_header_height:24px;
 
 
-// ********************************** bootstrap colors ******************************
-$bs_danger: #dc3545;
-$bs_warning: #ffc107;
-$bs_success: #28a745;
-$bs_info: #17a2b8;
-$bs_secondary: #6c757d;
-$bs_primary: #007bff;
-$bs_default: #6479a4;
-
-$bs_warning_light: #ffe495;
-$bs_purple: purple;
 
 // ********************************* Colour Variables ****************************
 // $back_color_dark: #071e3e;
@@ -83,13 +98,6 @@ $line_color_view: $menu_undeline;
 //   1. Usage of varibles in calc expression #{$varname}
 //   2.
 
-// alternate theme colors
-$alt_font-family:'Trebuchet MS';
-$alt_background:#525252;
-$alt_foreground:white;
-
-$alt_foreground_menu:white;
-$alt_background_menu:#f16e0a;
 
 
 

@@ -3,7 +3,7 @@
 
   -->
 
-<app-progress-mask #mask *ngIf="isLoadingRecords" [message]="maskMessage" maskOpacity="0.2" maskColor="white" ></app-progress-mask>
+<app-progress-mask #mask *ngIf="isLoadingRecords && false" [message]="maskMessage" maskOpacity="0.2" maskColor="white" ></app-progress-mask>
 
 
 <div id="wrapper_print" *ngIf="printerFriendly && configJSON" [formGroup]="formGroup">

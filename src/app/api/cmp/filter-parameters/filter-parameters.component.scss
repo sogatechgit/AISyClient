@@ -114,6 +114,10 @@ textarea {
     font-family: $grid_footer_font-family;
     padding: 4px 10px;
     font-size: 0.85em;
+    &.btn-alt-warning{
+      background-color: $alt_bs_warning !important;
+      color:$alt_foreground !important;
+    }
   }
 }
 // .form-group {
@@ -150,8 +154,13 @@ textarea {
   font-family: $form_header_font-family;
   // margin: -24px -24px 0px -24px !important;
   padding: 0px 10px;
+
   background: $bs_warning;
   color: $fore_color_dark;
+
+  background: $alt_bs_warning;
+  color: $alt_foreground;
+
   // text-shadow: gray 1px 1px 1px;
   cursor: move;
   margin-bottom: 0px;

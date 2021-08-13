@@ -518,6 +518,8 @@ export class StatsDetailsComponent implements OnInit, AfterViewInit {
         configData: paramConfigData,
         onSuccess: data => {
 
+          console.log("PRAMS: ",reqParams,", EXTRACTED DATA: ",data)
+
           this.UpdatePieCharts(tabName, data, paramConfigData);
           this.UpdateCharts(tabName, data, paramConfigData, 'bar');
           this.UpdateCharts(tabName, data, paramConfigData, 'line');

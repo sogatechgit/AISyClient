@@ -1,5 +1,5 @@
 /***********************************************************************
-* Automatically generated on 8/12/2021 5:17:30 PM
+* Automatically generated on 8/13/2021 1:28:05 PM
 ***********************************************************************/
 
 import { AppCommonMethodsService } from '../api/svc/app-common-methods.service';
@@ -94,13 +94,47 @@ export class QryDevMain extends TableBase {
   "gridColumns": [
     "REFNUM|cap=Ref.No.;center;wd=100",
     "DEVTITLE|cap=Title;mnw=120",
-    "ASSET|cap=Asset;mnw=100",
+    "ASSET|cap=Asset;mnw=150;mxw=150",
     "RSCLSTAT|cap=Status;center;wd=80",
-    "RAISEDATE|cap=Raised;center;wd=80",
-    "APPROVED|cap=Approved;center;wd=80",
+    "RAISEDATE|cap=Raised;center;wd=100",
+    "APPROVED|cap=Approved;center;wd=180",
     "CLOSED|cap=Closed;center;wd=100",
     "STATUS|cap=Current Status;center;wd=110",
     "RESPONSIBLE|cap=Responsible;wd=110"
+  ],
+  "gridColumnsStatus": [
+    "REFNUM|cap=Ref.No.;center;wd=100",
+    "DEVTITLE|cap=Title;mnw=120",
+    "ASSET|cap=Asset;mnw=150;mxw=150",
+    "DEVSTAT|cap=Status;center;wd=110",
+    "RAISEDATE|cap=Raised;center;wd=100",
+    "APPROVED|cap=Approved;center;wd=180",
+    "CLOSED|cap=Closed;center;wd=100",
+    "RSCLSTAT|cap=Current Status;center;wd=150",
+    "RESPONSIBLE|cap=Responsible;wd=110"
+  ],
+  "gridColumnsState": [
+    "REFNUM|cap=Ref.No.;center;wd=100",
+    "DEVTITLE|cap=Title;mnw=120",
+    "ASSET|cap=Asset;mnw=150;mxw=150",
+    "RSCLSTAT|cap=Status;center;wd=80",
+    "RAISEDATE|cap=Raised;center;wd=100",
+    "APPROVED|cap=Approved;center;wd=180",
+    "CLOSED|cap=Closed;center;wd=100",
+    "PRCOSTAT|cap=State;center;wd=110",
+    "RESPONSIBLE|cap=Responsible;wd=110"
+  ],
+  "gridColumnsPending": [
+    "REFNUM|cap=Ref.No.;center;wd=100",
+    "DEVTITLE|cap=Title;mnw=120",
+    "ASSET|cap=Asset;mnw=150;mxw=150",
+    "RSCLSTAT|cap=Status;center;wd=80",
+    "RAISEDATE|cap=Raised;center;wd=100",
+    "APPROVED|cap=Approved;center;wd=180",
+    "CLOSED|cap=Closed;center;wd=100",
+    "PRCOSTAT|cap=State;center;wd=110",
+    "RESPONSIBLE|cap=Responsible;wd=110",
+    "OVERDUEDAYS|cap=Overdue Days;center;wd=80"
   ],
   "gridColumnsTest": [
     "STATUSCODE@CODE|cap=Code;center;wd=80",
@@ -168,6 +202,8 @@ export class QryDevMain extends TableBase {
 	this.columns.push(new ColumnInfo('CNT_EXTEND', 'number', '', '', '', -1, -1, -1, -1, -1, false, false, false, this));
 	this.columns.push(new ColumnInfo('CNT_APPROVE', 'number', '', '', '', -1, -1, -1, -1, -1, false, false, false, this));
 	this.columns.push(new ColumnInfo('IS_WIDTHRAW', 'number', '', '', '', -1, -1, -1, -1, -1, false, false, false, this));
+	this.columns.push(new ColumnInfo('DEVSTAT', 'string', '', '', '', -1, -1, -1, -1, -1, false, false, false, this));
+	this.columns.push(new ColumnInfo('OVERDUEDAYS', 'number', '', '', '', -1, -1, -1, -1, -1, false, false, false, this));
 
     this.InitializeTable();
 
@@ -232,7 +268,9 @@ export class QryDevMainRow extends TableRowBase{
 		public AP8?:number, 
 		public CNT_EXTEND?:number, 
 		public CNT_APPROVE?:number, 
-		public IS_WIDTHRAW?:number){
+		public IS_WIDTHRAW?:number, 
+		public DEVSTAT?:string, 
+		public OVERDUEDAYS?:number){
     super();
 
   }
